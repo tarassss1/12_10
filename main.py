@@ -35,9 +35,9 @@ class Player:
         # горизонтальна колізія
         for w in walls: # перебір всіх елементів в списку walls
             if self.rect.colliderect(w.rect):
-                if self.rect.right > w.rect.left and self.rect.left < wall.rect.left:
+                if self.rect.right > w.rect.left and self.rect.left < w.rect.left:
                     self.rect.right = w.rect.left
-                elif self.rect.left < w.rect.right and self.rect.right > wall.rect.right:
+                elif self.rect.left < w.rect.right and self.rect.right > w.rect.right:
                     self.rect.left = w.rect.right
 
         self.vertical += self.gravity
@@ -60,8 +60,8 @@ class Player:
             self.can_jump = False
 
 walls = [
-    Wall(200,250,100,20),
-    Wall(350,250,100,20)
+    Wall(100,350,100,20),
+    Wall(250,350,100,20)
 ]      
 
             
@@ -72,13 +72,17 @@ player = Player(100,100,100,100,"bird.png") # removebg
 
 game = True
 while game:
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game = False
-
-    #window.fill((0,255,0)) 
+        if event.type == pygame.KEYDOWN: ##########
+            if event.key == pygame.K_w:  #########
+                player.jump() ############
+ 
     window.blit(background, (0,0))
+    for w in walls:   #######
+        w.draw(window)  ######
+
     window.blit(player.image, player.rect)
     player.move()
 
